@@ -20,9 +20,8 @@ def send_message():
         print("\033[1A\033[1A") #CLI上で、一行上に移動。下のprint(You:...)、で上のinputを上書き。動作の確認がしたければ、1Aの1を2とかに変えてみるといい。
         print("You: " + message)
         message_bytes = message.encode()
-        sock.sendto(len(username).to_bytes(1, "big"), (server_address, server_port))
-        sock.sendto(username.encode(), (server_address, server_port))
-        sock.sendto(message_bytes, (server_address, server_port))
+        sock.sendto(len(username).to_bytes(1, "big"), (server_address, server_port)) 
+        sock.sendto(username.encode() + message_bytes, (server_address, server_port))
         time.sleep(0.1)
 
 def receive_message():

@@ -17,11 +17,12 @@ while True:
     
     data, address = sock.recvfrom(1)
     name_length = int.from_bytes(data, "big") #ユーザー名のlengthを受け取る
-    name = sock.recvfrom(name_length)[0].decode("utf-8")
+    data = sock.recvfrom(4096)[0].decode("utf-8")
+    name = data[:name_length]
     if name not in user_hashmap:
         user_hashmap[name] = address
     
-    data = sock.recvfrom(4096)[0].decode("utf-8")
+    data = data[name_length:]
     print(data)
 
     print("Sending the message")
