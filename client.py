@@ -14,12 +14,11 @@ sock.bind((client_address, client_port))
 print("Connected to the server!")
 username = input("Tell me your username: ")
 
-
-#後で、sendのところ、usernamelen,username,messageを一括で送れるようにしたい。そうじゃないとユーザーが複数人の時に二人が同時にメッセージを送るとかなると厄介。
-
 def send_message():
     while True:
-        message = input("You: ")
+        message = input("")
+        print("\033[1A\033[1A") #CLI上で、一行上に移動。下のprint(You:...)、で上のinputを上書き。動作の確認がしたければ、1Aの1を2とかに変えてみるといい。
+        print("You: " + message)
         message_bytes = message.encode()
         sock.sendto(len(username).to_bytes(1, "big"), (server_address, server_port))
         sock.sendto(username.encode(), (server_address, server_port))
